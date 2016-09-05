@@ -18,9 +18,11 @@
 # create ripple function
 exports.Ripple = (event, layer) ->
 	eventCoords = Pointer.offset(event, layer)
+	# Set Ripple Color
+	rippleColor = if layer.rippleColor then layer.rippleColor else "black"
 
 	# Change color of ripple
-	color = "black"
+	color = rippleColor
 	animation = curve: "ease-out", time: .4
 
 	# Create layers on Click
@@ -30,7 +32,7 @@ exports.Ripple = (event, layer) ->
 		width: layer.width
 		height: layer.height
 		opacity: 0
-		backgroundColor: color
+		backgroundColor: rippleColor
 	pressFeedback.states.add
 		pressed: opacity: .04
 	pressFeedback.states.switch("pressed", animation)
@@ -42,7 +44,7 @@ exports.Ripple = (event, layer) ->
 		midX: eventCoords.x
 		midY: eventCoords.y
 		opacity: .16
-		backgroundColor: color
+		backgroundColor: rippleColor
 	rippleCircle.states.add
 		pressed: scale: layer.width / 60, opacity: 0,
 	rippleCircle.states.switch("pressed", animation)
